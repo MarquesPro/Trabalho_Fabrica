@@ -113,3 +113,43 @@ Empresas e pessoas na área de peças que não possuem processos automatizados.
 - **Idade:** 48 anos
 - **Experiência:** 30 anos no setor automotivo, começou como operário e cresceu até se tornar proprietário da própria fábrica.
 - **Necessidades:** Uma visão clara e consolidada do desempenho da produção, incluindo custos, eficiência e qualidade, para tomar decisões estratégicas que impactem diretamente a lucratividade e o crescimento da empresa. Com o sistema de coleta e análise de dados, André pode monitorar a performance da produção em tempo real, identificar áreas onde os custos podem ser reduzidos, melhorar a qualidade dos produtos e, consequentemente, aumentar a rentabilidade e a satisfação do cliente. A capacidade de gerar relatórios detalhados também facilita o planejamento estratégico e a tomada de decisões informadas.
+
+- ## Mermaid
+
+``` mermaid
+sequenceDiagram
+    participant Cliente
+    participant API
+    participant DB
+    participant Automação
+
+    Cliente->>API: Solicita criação de peça (POST /peças)
+    API->>DB: Insere nova peça no banco de dados
+    DB-->>API: Confirmação da inserção
+    API-->>Cliente: Confirmação da criação da peça
+
+    Cliente->>API: Solicita atualização de peça (PUT /peças/{id})
+    API->>DB: Atualiza dados da peça
+    DB-->>API: Confirmação da atualização
+    API-->>Cliente: Confirmação da atualização da peça
+
+    Cliente->>API: Solicita remoção de peça (DELETE /peças/{id})
+    API->>DB: Remove peça do banco de dados
+    DB-->>API: Confirmação da remoção
+    API-->>Cliente: Confirmação da remoção da peça
+
+    Cliente->>API: Solicita informações de peça (GET /peças/{id})
+    API->>DB: Busca dados da peça
+    DB-->>API: Dados da peça
+    API-->>Cliente: Retorna dados da peça
+
+    Automação->>API: Solicita dados para processo automatizado
+    API->>DB: Busca dados relevantes para o processo
+    DB-->>API: Dados necessários para automação
+    API-->>Automação: Envia dados para o sistema automatizado
+
+    Automação->>API: Envia resultado do processo automatizado
+    API->>DB: Atualiza status da peça/processo
+    DB-->>API: Confirmação da atualização
+    API-->>Automação: Confirmação da conclusão do processo
+
