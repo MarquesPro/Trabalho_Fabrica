@@ -114,7 +114,26 @@ Empresas e pessoas na área de peças que não possuem processos automatizados.
 - **Experiência:** 30 anos no setor automotivo, começou como operário e cresceu até se tornar proprietário da própria fábrica.
 - **Necessidades:** Uma visão clara e consolidada do desempenho da produção, incluindo custos, eficiência e qualidade, para tomar decisões estratégicas que impactem diretamente a lucratividade e o crescimento da empresa. Com o sistema de coleta e análise de dados, André pode monitorar a performance da produção em tempo real, identificar áreas onde os custos podem ser reduzidos, melhorar a qualidade dos produtos e, consequentemente, aumentar a rentabilidade e a satisfação do cliente. A capacidade de gerar relatórios detalhados também facilita o planejamento estratégico e a tomada de decisões informadas.
 
-- ## Mermaid
+### Diagrama de Contexto
+
+``` mermaid
+graph TB
+    subgraph Sistema_IoT
+        S1[Coleta de Dados]
+        S2[Armazenamento de Dados]
+        S3[Visualização em Tempo Real]
+        S4[Geração de Relatórios]
+        S1 --> S2
+        S2 --> S3
+        S2 --> S4
+    end
+    S1 <--> A[Sensores IoT]
+    S3 <--> U[Usuário/Admin]
+    S2 <--> DB[SGBD]
+    S4 <--> U[Usuário/Admin]
+
+```
+- ## Diagrama de Sequencia
 
 ``` mermaid
 sequenceDiagram
