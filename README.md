@@ -137,38 +137,29 @@ graph TB
 
 ``` mermaid
 sequenceDiagram
-    participant Cliente
+    participant Sensor
+    participant Automação
     participant API
     participant DB
-    participant Automação
+    participant Dashboard
 
-    Cliente->>API: Solicita criação de peça (POST /peças)
-    API->>DB: Insere nova peça no banco de dados
-    DB-->>API: Confirmação da inserção
-    API-->>Cliente: Confirmação da criação da peça
+    Sensor->>Automação: Envia dados de produção em tempo real
+    Automação->>API: Solicita armazenamento de dados (ex.: tempo de ciclo, quantidade, defeitos)
+    API->>DB: Armazena dados de produção
+    DB-->>API: Confirmação de armazenamento
+    API-->>Automação: Confirmação de dados armazenados
 
-    Cliente->>API: Solicita atualização de peça (PUT /peças/{id})
-    API->>DB: Atualiza dados da peça
-    DB-->>API: Confirmação da atualização
-    API-->>Cliente: Confirmação da atualização da peça
+    Automação->>API: Solicita dados para análise (ex.: taxa de defeitos, consumo de energia)
+    API->>DB: Consulta dados relevantes
+    DB-->>API: Retorna dados consultados
+    API-->>Automação: Dados retornados para análise
 
-    Cliente->>API: Solicita remoção de peça (DELETE /peças/{id})
-    API->>DB: Remove peça do banco de dados
-    DB-->>API: Confirmação da remoção
-    API-->>Cliente: Confirmação da remoção da peça
+    Dashboard->>API: Solicita dados para visualização em tempo real
+    API->>DB: Consulta dados atualizados
+    DB-->>API: Dados atualizados
+    API-->>Dashboard: Exibe dados em tempo real (gráficos e tabelas)
 
-    Cliente->>API: Solicita informações de peça (GET /peças/{id})
-    API->>DB: Busca dados da peça
-    DB-->>API: Dados da peça
-    API-->>Cliente: Retorna dados da peça
-
-    Automação->>API: Solicita dados para processo automatizado
-    API->>DB: Busca dados relevantes para o processo
-    DB-->>API: Dados necessários para automação
-    API-->>Automação: Envia dados para o sistema automatizado
-
-    Automação->>API: Envia resultado do processo automatizado
-    API->>DB: Atualiza status da peça/processo
-    DB-->>API: Confirmação da atualização
-    API-->>Automação: Confirmação da conclusão do processo
-
+    Dashboard->>API: Solicita geração de relatórios (ex.: produção diária)
+    API->>DB: Consulta e agrega dados necessários
+    DB-->>API: Dados agregados
+    API-->>Dashboard: Envia relatório gerado
